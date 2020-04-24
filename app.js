@@ -5,13 +5,22 @@ const randomBtn = document.querySelector('.randomSketch');
 const sketchBtn = document.querySelector('.sketchySketch');
 const pleaseBtn = document.querySelector('.pleasingSketch');
 const heading = document.querySelector('.header');
+let blackToggled = true;
+let randomToggled = false;
+let sketchyToggled = false;
+let pleaseToggled = false;
 let windowHeight = window.innerHeight;
 let headerHeight = heading.offsetHeight; 
+let color = '#000';
+let mouseAction = 'mouseover';
+//Add media query to change mouseover to click on screens
+let x = window.matchMedia("(max-width: 500px)"); 
 
 
 //resize container on window resize
 window.onresize = function (e) {
     resizeGrid();
+    changeMouseAction(x);
 }
 
 //Create an initial grid
@@ -20,6 +29,7 @@ createDivs(16, 16);
 //Create the grid 
 function createDivs (rows, cols) {
     resizeGrid ();
+    changeMouseAction(x);
     container.style.setProperty('--grid-rows', rows);
     container.style.setProperty('--grid-cols', cols);
     if ((rows <= 100 && rows >= 0) && (cols <= 100 && cols >= 0) && !(isNaN(rows) && !isNaN(cols)) && (rows != "" && cols != "")) {
@@ -33,6 +43,7 @@ function createDivs (rows, cols) {
         alert('Please insert a number between 1 and 100 in each box.');
         createDivs(16, 16);
     }
+    whichMode();
 }
 
 function resizeGrid () {
@@ -44,123 +55,45 @@ function resizeGrid () {
 
 
 //call buttons
-blackBtn.addEventListener('click', () => {
+blackBtn.addEventListener('click', blackColor);
+randomBtn.addEventListener('click', randomColor);
+sketchBtn.addEventListener('click', sketchyColor);
+pleaseBtn.addEventListener('click', pleaseColor);
+
+function blackColor () {
+    selectMode('black');
     changeColor('black');
-});
+}
 
-randomBtn.addEventListener('click', () => {
+function randomColor () {
+    selectMode('random');
     changeColor('random');
-});
+}
 
-sketchBtn.addEventListener('click', () => {
+function sketchyColor () {
+    selectMode('sketch');
     changeColor('sketch');
-});
+}
 
-pleaseBtn.addEventListener('click', () => {
+function pleaseColor () {
+    selectMode('pleasing');
     changeColor('pleasing');
-});
+}
 
-//Add media query to change mouseover to click on screens
-let x = window.matchMedia("(max-width: 500px)"); 
- //Change Color 
-function changeColor (mode) {
-    let sketchDiv = document.querySelectorAll('.sketchDiv');
-
+//function to change mouseAction for smaller screens
+function changeMouseAction (x) {
     if (x.matches) {
-        switch (mode) {
-        case 'black':
-            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchRandom));
-            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchySketch));
-            sketchDiv.forEach(pixel => pixel.removeEventListener('click', pleasingSketch));
-            sketchDiv.forEach(pixel => pixel.addEventListener('click', sketchBlack));
-            blackBtn.classList.add('active');
-            randomBtn.classList.remove('active');
-            sketchBtn.classList.remove('active');
-            pleaseBtn.classList.remove('active');    
-            break;
-        case 'random':
-            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchySketch));
-            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchBlack));
-            sketchDiv.forEach(pixel => pixel.removeEventListener('click', pleasingSketch));
-            sketchDiv.forEach(pixel => pixel.addEventListener('click', sketchRandom));
-            blackBtn.classList.remove('active');
-            randomBtn.classList.add('active');
-            sketchBtn.classList.remove('active');
-            pleaseBtn.classList.remove('active');
-            break;
-        case 'sketch':
-            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchBlack));
-            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchRandom));
-            sketchDiv.forEach(pixel => pixel.removeEventListener('click', pleasingSketch));
-            sketchDiv.forEach(pixel => pixel.addEventListener('click', sketchySketch));
-            blackBtn.classList.remove('active');
-            randomBtn.classList.remove('active');
-            sketchBtn.classList.add('active');
-            pleaseBtn.classList.remove('active');
-            break;
-        case 'pleasing':
-            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchBlack));
-            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchRandom));
-            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchySketch));
-            sketchDiv.forEach(pixel => pixel.addEventListener('click', pleasingSketch));
-            blackBtn.classList.remove('active');
-            randomBtn.classList.remove('active');
-            sketchBtn.classList.remove('active');
-            pleaseBtn.classList.add('active');
-        }
+        mouseAction = 'click';
     } else {
-        //Change Color 
-        sketchDiv.forEach(pixel => pixel.addEventListener('click', eraseSketch));
-        switch (mode) {
-            case 'black':
-                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchRandom));
-                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchySketch));
-                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', pleasingSketch));
-                sketchDiv.forEach(pixel => pixel.addEventListener('mouseover', sketchBlack));
-                blackBtn.classList.add('active');
-                randomBtn.classList.remove('active');
-                sketchBtn.classList.remove('active');
-                pleaseBtn.classList.remove('active');
-                break;
-            case 'random':
-                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchySketch));
-                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchBlack));
-                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', pleasingSketch));
-                sketchDiv.forEach(pixel => pixel.addEventListener('mouseover', sketchRandom));
-                blackBtn.classList.remove('active');
-                randomBtn.classList.add('active');
-                sketchBtn.classList.remove('active');
-                pleaseBtn.classList.remove('active');
-                break;
-            case 'sketch':
-                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchBlack));
-                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchRandom));
-                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', pleasingSketch));
-                sketchDiv.forEach(pixel => pixel.addEventListener('mouseover', sketchySketch));
-                blackBtn.classList.remove('active');
-                randomBtn.classList.remove('active');
-                sketchBtn.classList.add('active');
-                pleaseBtn.classList.remove('active');
-                break;
-            case 'pleasing':
-                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchBlack));
-                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchRandom));
-                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchySketch));
-                sketchDiv.forEach(pixel => pixel.addEventListener('mouseover', pleasingSketch));
-                blackBtn.classList.remove('active');
-                randomBtn.classList.remove('active');
-                sketchBtn.classList.remove('active');
-                pleaseBtn.classList.add('active');
-            }
-        }
+        mouseAction = 'mouseover';
     }
+}
 
 //Change pixels to black on mouseover
 function sketchBlack (e) {
     e.target.style.opacity = '';
     e.target.style.backgroundColor = '#000';
 }
-
 
 //Color changing function 
 function sketchRandom (e) {
@@ -187,7 +120,6 @@ function pleasingSketch (e) {
     for (let i = 0; i < pleasingColor.length; i++) {
         e.target.style.backgroundColor =  pleasingColor[i];
     }
-    console.log(pleasingColor);
 }
 
 //function to erase on click
@@ -206,3 +138,91 @@ function resetGrid () {
     createDivs(newRowVal, newColVal);
 }
 
+ //Change Color 
+ function changeColor (mode) {
+    let sketchDiv = document.querySelectorAll('.sketchDiv');
+        sketchDiv.forEach(pixel => pixel.addEventListener('click', eraseSketch));
+        switch (mode) {
+        case 'black':
+            sketchDiv.forEach(pixel => pixel.removeEventListener(mouseAction, sketchRandom));
+            sketchDiv.forEach(pixel => pixel.removeEventListener(mouseAction, sketchySketch));
+            sketchDiv.forEach(pixel => pixel.removeEventListener(mouseAction, pleasingSketch));
+            sketchDiv.forEach(pixel => pixel.addEventListener(mouseAction, sketchBlack));  
+            break;
+        case 'random':
+            sketchDiv.forEach(pixel => pixel.removeEventListener(mouseAction, sketchySketch));
+            sketchDiv.forEach(pixel => pixel.removeEventListener(mouseAction, sketchBlack));
+            sketchDiv.forEach(pixel => pixel.removeEventListener(mouseAction, pleasingSketch));
+            sketchDiv.forEach(pixel => pixel.addEventListener(mouseAction, sketchRandom));
+            break;
+        case 'sketch':
+            sketchDiv.forEach(pixel => pixel.removeEventListener(mouseAction, sketchBlack));
+            sketchDiv.forEach(pixel => pixel.removeEventListener(mouseAction, sketchRandom));
+            sketchDiv.forEach(pixel => pixel.removeEventListener(mouseAction, pleasingSketch));
+            sketchDiv.forEach(pixel => pixel.addEventListener(mouseAction, sketchySketch));
+            break;
+        case 'pleasing':
+            sketchDiv.forEach(pixel => pixel.removeEventListener(mouseAction, sketchBlack));
+            sketchDiv.forEach(pixel => pixel.removeEventListener(mouseAction, sketchRandom));
+            sketchDiv.forEach(pixel => pixel.removeEventListener(mouseAction, sketchySketch));
+            sketchDiv.forEach(pixel => pixel.addEventListener(mouseAction, pleasingSketch));
+        }
+    }
+
+//
+function selectMode (mode) {
+        switch (mode) {
+        case 'black':
+            blackToggled = true;
+            randomToggled = false;
+            sketchyToggled = false;
+            pleaseToggled = false;
+            blackBtn.classList.add('active');
+            randomBtn.classList.remove('active');
+            sketchBtn.classList.remove('active');
+            pleaseBtn.classList.remove('active');    
+            break;
+        case 'random':
+            blackToggled = false;
+            randomToggled = true;
+            sketchyToggled = false;
+            pleaseToggled = false;
+            blackBtn.classList.remove('active');
+            randomBtn.classList.add('active');
+            sketchBtn.classList.remove('active');
+            pleaseBtn.classList.remove('active');
+            break;
+        case 'sketch':
+            blackToggled = false;
+            randomToggled = false;
+            sketchyToggled = true;
+            pleaseToggled = false;
+            blackBtn.classList.remove('active');
+            randomBtn.classList.remove('active');
+            sketchBtn.classList.add('active');
+            pleaseBtn.classList.remove('active');
+            break;
+        case 'pleasing':
+            blackToggled = false;
+            randomToggled = false;
+            sketchyToggled = false;
+            pleaseToggled = true;
+            blackBtn.classList.remove('active');
+            randomBtn.classList.remove('active');
+            sketchBtn.classList.remove('active');
+            pleaseBtn.classList.add('active');
+        }
+}
+
+//find current mode 
+function whichMode () {
+    if (blackToggled === true) {
+        blackColor();
+    } else if (randomToggled === true) {
+        randomColor();
+    } else if (sketchyToggled === true) {
+        sketchyColor();
+    } else if (pleaseToggled === true) {
+        pleasingColor();
+    }
+}

@@ -131,10 +131,6 @@ button {
 
 /*Media Queries*/
 @media(max-width: 500px) {
-
-    body {
-        background-color: #fff;
-    }
     .gridOptionPanel {
         flex-direction: column;
     }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <!--Google Font for Header-->
+    <link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap" rel="stylesheet">
+    <!--Google Font for content-->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+    <meta content="width=device-width" name="viewport" />
+</head>
+<body>
+    <div class="header">
+        <div class="title">
+            <h1>Etch A Sketch</h1>
+        </div>
+        <div class="gridOptionPanel">
+            <div class="newGridOptions">
+                <h2 class="optionHeadings heading1">CREATE A NEW GRID</h2>
+                <div class="buttons">
+                    <input class="newColVal" type="number" placeholder="16">
+                    <input class="newRowVal" type="number" placeholder="16">
+                    <button class="submitBtn" type="button" onclick="resetGrid();">Reset</button>
+                </div>
+            </div>
+            <div class="colorOptions">
+                <h2 class="optionHeadings heading2">COLOR OPTIONS</h2>
+                <div class="buttons">
+                    <button class="blackSketch btn" type="button">Black</button>
+                    <button class="randomSketch btn" type="button">Random</button>
+                    <button class="pleasingSketch btn" type="button">Gradient</button>
+                    <button class="sketchySketch btn" type="button">Sketchy</button>
+                </div>
+            </div>
+        </div>
+        <div class="clickMessage">
+            <p>CLICK TO ERASE.</p>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="container">
+
+        </div>
+    </div>  
+    <!--Link to -->
+    <script type="text/javascript" src="app.js"></script>
+    <!--Link to PleaseJS-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pleasejs/0.4.2/Please.min.js"></script>
+</body>
+</html>

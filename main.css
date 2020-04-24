@@ -141,7 +141,10 @@ button {
 
     .header {
         grid-template-rows: 60px 180px 46px;
+    }
 
+    .clickMessage {
+        display: none;
     }
 }
 

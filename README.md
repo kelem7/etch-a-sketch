@@ -17,4 +17,5 @@ See a **live preview** of the page [here](https://kelem7.github.io/etch-a-sketch
 * Added an option to increase background color opacity by 0.1 each mouseover until black. 
 * Added an event listener to create an erase on click functionality.
 * Increased responsiveness by adding **media queries** and a function to scale size of grid based on **window.innerHeight**.
+* Added **Javascript media query** so that the game can be played on mobile devices by clicking rather than mouseover. 
 

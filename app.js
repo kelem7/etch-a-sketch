@@ -60,63 +60,100 @@ pleaseBtn.addEventListener('click', () => {
     changeColor('pleasing');
 });
 
-console.log(btns);
-
-    btns[i].addEventListener("click", function () {
-        if(this.classList.contains('active')) {
-         this.classList.remove('active');
-        }
-        else this.classList.add('active');
-    });
-
-
-//Change Color 
+//Add media query to change mouseover to click on screens
+let x = window.matchMedia("(max-width: 500px)"); 
+ //Change Color 
 function changeColor (mode) {
     let sketchDiv = document.querySelectorAll('.sketchDiv');
-    sketchDiv.forEach(pixel => pixel.addEventListener('click', eraseSketch));
-    switch (mode) {
+
+    if (x.matches) {
+        switch (mode) {
         case 'black':
-            sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchRandom));
-            sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchySketch));
-            sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', pleasingSketch));
-            sketchDiv.forEach(pixel => pixel.addEventListener('mouseover', sketchBlack));
+            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchRandom));
+            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchySketch));
+            sketchDiv.forEach(pixel => pixel.removeEventListener('click', pleasingSketch));
+            sketchDiv.forEach(pixel => pixel.addEventListener('click', sketchBlack));
             blackBtn.classList.add('active');
             randomBtn.classList.remove('active');
             sketchBtn.classList.remove('active');
-            pleaseBtn.classList.remove('active');
+            pleaseBtn.classList.remove('active');    
             break;
         case 'random':
-            sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchySketch));
-            sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchBlack));
-            sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', pleasingSketch));
-            sketchDiv.forEach(pixel => pixel.addEventListener('mouseover', sketchRandom));
+            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchySketch));
+            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchBlack));
+            sketchDiv.forEach(pixel => pixel.removeEventListener('click', pleasingSketch));
+            sketchDiv.forEach(pixel => pixel.addEventListener('click', sketchRandom));
             blackBtn.classList.remove('active');
             randomBtn.classList.add('active');
             sketchBtn.classList.remove('active');
             pleaseBtn.classList.remove('active');
             break;
         case 'sketch':
-            sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchBlack));
-            sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchRandom));
-            sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', pleasingSketch));
-            sketchDiv.forEach(pixel => pixel.addEventListener('mouseover', sketchySketch));
+            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchBlack));
+            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchRandom));
+            sketchDiv.forEach(pixel => pixel.removeEventListener('click', pleasingSketch));
+            sketchDiv.forEach(pixel => pixel.addEventListener('click', sketchySketch));
             blackBtn.classList.remove('active');
             randomBtn.classList.remove('active');
             sketchBtn.classList.add('active');
             pleaseBtn.classList.remove('active');
             break;
         case 'pleasing':
-            sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchBlack));
-            sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchRandom));
-            sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchySketch));
-            sketchDiv.forEach(pixel => pixel.addEventListener('mouseover', pleasingSketch));
+            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchBlack));
+            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchRandom));
+            sketchDiv.forEach(pixel => pixel.removeEventListener('click', sketchySketch));
+            sketchDiv.forEach(pixel => pixel.addEventListener('click', pleasingSketch));
             blackBtn.classList.remove('active');
             randomBtn.classList.remove('active');
             sketchBtn.classList.remove('active');
             pleaseBtn.classList.add('active');
         }
-}
-
+    } else {
+        //Change Color 
+        sketchDiv.forEach(pixel => pixel.addEventListener('click', eraseSketch));
+        switch (mode) {
+            case 'black':
+                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchRandom));
+                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchySketch));
+                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', pleasingSketch));
+                sketchDiv.forEach(pixel => pixel.addEventListener('mouseover', sketchBlack));
+                blackBtn.classList.add('active');
+                randomBtn.classList.remove('active');
+                sketchBtn.classList.remove('active');
+                pleaseBtn.classList.remove('active');
+                break;
+            case 'random':
+                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchySketch));
+                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchBlack));
+                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', pleasingSketch));
+                sketchDiv.forEach(pixel => pixel.addEventListener('mouseover', sketchRandom));
+                blackBtn.classList.remove('active');
+                randomBtn.classList.add('active');
+                sketchBtn.classList.remove('active');
+                pleaseBtn.classList.remove('active');
+                break;
+            case 'sketch':
+                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchBlack));
+                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchRandom));
+                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', pleasingSketch));
+                sketchDiv.forEach(pixel => pixel.addEventListener('mouseover', sketchySketch));
+                blackBtn.classList.remove('active');
+                randomBtn.classList.remove('active');
+                sketchBtn.classList.add('active');
+                pleaseBtn.classList.remove('active');
+                break;
+            case 'pleasing':
+                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchBlack));
+                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchRandom));
+                sketchDiv.forEach(pixel => pixel.removeEventListener('mouseover', sketchySketch));
+                sketchDiv.forEach(pixel => pixel.addEventListener('mouseover', pleasingSketch));
+                blackBtn.classList.remove('active');
+                randomBtn.classList.remove('active');
+                sketchBtn.classList.remove('active');
+                pleaseBtn.classList.add('active');
+            }
+        }
+    }
 
 //Change pixels to black on mouseover
 function sketchBlack (e) {
